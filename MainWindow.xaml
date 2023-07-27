@@ -1,0 +1,158 @@
+﻿<Window x:Class="WeatherApp.MainWindow"
+        x:Name="mainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WeatherApp"
+        xmlns:viewModels="clr-namespace:WeatherApp.MVVM.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="300" Loaded="Window_Loaded"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True">
+    <Window.DataContext>
+        <viewModels:WeatherViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <Storyboard x:Key="OpenAnimation">
+            <DoubleAnimation Storyboard.TargetName="settingsPopup" Storyboard.TargetProperty="Width" From="0" To="200" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetName="settingsPopup" Storyboard.TargetProperty="Height" From="0" To="250" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetName="settingsPopup" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2" />
+        </Storyboard>
+        <!-- Popup Open Animation -->
+        <Storyboard x:Key="CloseAnimation">
+            <DoubleAnimation Storyboard.TargetName="settingsPopup" Storyboard.TargetProperty="Width" To="0" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetName="settingsPopup" Storyboard.TargetProperty="Height" To="0" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetName="settingsPopup" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
+        </Storyboard>
+        <!-- Popup Close Animation -->
+    </Window.Resources>
+    <Border CornerRadius="30" MouseDown="DraggingPanel_MouseDown" MouseMove="DraggingPanel_MouseMove" MouseUp="DraggingPanel_MouseUp"  >
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#D8485154" Offset="0.426"/>
+                <GradientStop Color="#D81177F5" Offset="1"/>
+                <GradientStop Color="#D8405568" Offset="0.643"/>
+                <GradientStop Color="#D844525C" Offset="0.552"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid VerticalAlignment="Center" Margin="10 15 10 15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <Button Width="30" Click="OpenSettings_Click" BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
+                        <Image Source="{StaticResource SettingsImage}" Stretch="Uniform" />
+                    </Button>
+                    <Popup x:Name="settingsPopup" PlacementTarget="{Binding ElementName=mainWindow}" Placement="Mouse" AllowsTransparency="True">
+                        <Border CornerRadius="10" BorderBrush="White" BorderThickness="1" >
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF485154" Offset="0.402"/>
+                                    <GradientStop Color="#FF11BCF5" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <StackPanel Margin="10 20">
+                                <TextBlock Text="Current city:" Margin="0 0 0 5" />
+                                <TextBlock Text="{Binding Weather.Name}" Margin="0 0 0 10"/>
+
+                                <TextBox Text="{Binding NewCity}"></TextBox>
+                                <Button Command="{Binding SetCityCommand}" Click="SaveSettings_Click" >Save settings</Button>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </StackPanel>
+                <!-- Settings Button -->
+
+                <StackPanel Grid.Column="1" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock FontSize="16" FontWeight="Bold" Foreground="#fff">
+                        <Run Text="{Binding Weather.Name}" />
+                    </TextBlock>
+                </StackPanel>
+                <!-- City Name -->
+
+                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                    <Button Width="25" Click="CloseButton_Click" BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
+                        <Image Source="{StaticResource CloseImage}"  Stretch="Uniform"/>
+                    </Button>
+                </StackPanel>
+                <!-- Exit Button -->
+
+            </Grid>
+            <!-- Header Grid -->
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <Image Source="{Binding Weather.WeatherInfo.icon, Converter={StaticResource WeatherIconConverter}}" Stretch="Uniform"/>
+                </StackPanel>
+                <!-- Image Block -->
+
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Weather.Time, Converter={StaticResource DateTimeConverter}}"></TextBlock>
+                    <!-- Date -->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Weather.Main.temp, Converter={StaticResource TemperatureConverter}}" FontSize="50" FontWeight="Bold"></TextBlock>
+                        <!-- Main Temperature -->
+                        <TextBlock Text="{Binding Weather.Main.temp_min, Converter={StaticResource TemperatureConverter}, StringFormat='/ {0}°C'}" FontSize="27" FontWeight="Bold" Foreground="#7FFFFFFF" VerticalAlignment="Bottom"></TextBlock>
+                        <!-- Min Temperature -->
+                    </StackPanel>
+                    <!-- Temperature Block -->
+                    <TextBlock Text="{Binding Weather.WeatherInfo.description}" Foreground="#7FFFFFFF" FontSize="12"></TextBlock>
+                </StackPanel>
+                <!-- Information Block -->
+
+            </Grid>
+            <Separator Grid.Row="2" Background="#B3FFFFFF" Width="270" Height="1" Margin="0" Padding="0" />
+            <!-- Main Information -->
+            <Grid Grid.Row="3" Margin="10 10 10 30" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="10 0 10 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Width="32" Source="{StaticResource WindIcon}"/>
+                    <TextBlock FontSize="12" Margin="0 0 0 3" TextAlignment="Center" Text="{Binding Weather.WindInfo.speed, StringFormat=' {0} km/h' }" ></TextBlock>
+                    <TextBlock FontSize="10" FontWeight="Bold" Foreground="#7FFFFFFF" TextAlignment="Center">Wind</TextBlock>
+                </StackPanel>
+                <!-- Wind Info -->
+
+                <StackPanel Grid.Column="1" Margin="10 0 10 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Width="32" Source="{StaticResource HumidityIcon}"/>
+                    <TextBlock Text="{Binding Weather.Main.humidity, StringFormat=' {0}%'}" FontSize="12" Margin="0 0 0 3" TextAlignment="Center"></TextBlock>
+                    <TextBlock FontSize="10" FontWeight="Bold" Foreground="#7FFFFFFF" TextAlignment="Center">Humidity</TextBlock>
+                </StackPanel>
+                <!-- Humidity Info -->
+
+                <StackPanel Grid.Column="2" Margin="10 0 10 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Width="32" Source="{StaticResource RainIcon}" Stretch="Uniform"/>
+                    <TextBlock Text="{Binding Weather.RainInfo.h3, StringFormat=' {0} mm'}" FontSize="12" Margin="0 0 0 3" TextAlignment="Center"></TextBlock>
+                    <TextBlock FontSize="10" FontWeight="Bold" Foreground="#7FFFFFFF" TextAlignment="Center" >Rain</TextBlock>
+                </StackPanel>
+                <!-- Chance Of Rain -->
+
+            </Grid>
+            <!-- Footer -->
+
+        </Grid>
+        <!-- Main Grid -->
+    </Border>
+</Window>
