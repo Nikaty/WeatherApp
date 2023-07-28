@@ -3,6 +3,7 @@
 /obj/
 /Debug/
 /Release/
+/packages/
 
 # Visual Studio files
 *.suo
