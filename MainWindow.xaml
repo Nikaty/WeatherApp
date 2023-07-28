@@ -27,34 +27,6 @@
             <DoubleAnimation Storyboard.TargetName="settingsPopup" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
         </Storyboard>
         <!-- Popup Close Animation -->
-        <Style x:Key="Rotate" TargetType="Button">
-            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
-            <Setter Property="RenderTransform">
-                <Setter.Value>
-                    <RotateTransform />
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <!-- Триггер при наведении на кнопку -->
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Trigger.EnterActions>
-                        <!-- Запускаем анимацию при наведении -->
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation
-                                    Storyboard.TargetProperty="(Button.RenderTransform).(RotateTransform.Angle)"
-                                    To="360" Duration="0:0:1" RepeatBehavior="Forever" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </Trigger.EnterActions>
-                    <Trigger.ExitActions>
-                        <!-- Останавливаем анимацию при уходе мыши -->
-                        <StopStoryboard BeginStoryboardName="RotationAnimation" />
-                    </Trigger.ExitActions>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <!-- Rotate Animation -->
     </Window.Resources>
     <Border CornerRadius="30" MouseDown="DraggingPanel_MouseDown" MouseMove="DraggingPanel_MouseMove" MouseUp="DraggingPanel_MouseUp"  >
         <Border.Background>
@@ -84,7 +56,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                    <Button Width="30" Style="{StaticResource Rotate}" Click="OpenSettings_Click" BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
+                    <Button Width="30" Click="OpenSettings_Click" BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
                         <Image Source="{StaticResource SettingsImage}" Stretch="Uniform" />
                     </Button>
                     <Popup x:Name="settingsPopup" PlacementTarget="{Binding ElementName=mainWindow}" Placement="Mouse" AllowsTransparency="True">
@@ -99,8 +71,8 @@
                                 <TextBlock Text="Current city:" Margin="0 0 0 5" />
                                 <TextBlock Text="{Binding Weather.Name}" Margin="0 0 0 10"/>
 
-                                <TextBox Text="{Binding NewCity}"></TextBox>
-                                <Button Command="{Binding SetCityCommand}" Click="SaveSettings_Click" >Save settings</Button>
+                                <TextBox Text="{Binding NewCity}" Margin="10"></TextBox>
+                                <Button Command="{Binding SetCityCommand}" Foreground="Black" Margin="10 0" Click="SaveSettings_Click" >Save settings</Button>
                             </StackPanel>
                         </Border>
                     </Popup>
