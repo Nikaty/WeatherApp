@@ -81,7 +81,7 @@ namespace WeatherApp.MVVM.ViewModels
             {
                 City = "New York";
             }
-            SetCityCommand = new RelayCommand(async () => await SetNewCity());
+            SetCityCommand = new RelayCommand(async (param) => await SetNewCity(), (param) => !IsFetchingWeather);
         }
 
         private async Task SetNewCity()
@@ -93,10 +93,6 @@ namespace WeatherApp.MVVM.ViewModels
                 Properties.Settings.Default.Save();
                 Weather = await WeatherService.GetWeatherAsync(City);
                 NewCity = string.Empty;
-            }
-            else
-            {
-                
             }
         }
 

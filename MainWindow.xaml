@@ -27,14 +27,45 @@
             <DoubleAnimation Storyboard.TargetName="settingsPopup" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
         </Storyboard>
         <!-- Popup Close Animation -->
+        <Style x:Key="Rotate" TargetType="Button">
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <RotateTransform />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <!-- Триггер при наведении на кнопку -->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <!-- Запускаем анимацию при наведении -->
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="(Button.RenderTransform).(RotateTransform.Angle)"
+                                    To="360" Duration="0:0:1" RepeatBehavior="Forever" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <!-- Останавливаем анимацию при уходе мыши -->
+                        <StopStoryboard BeginStoryboardName="RotationAnimation" />
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- Rotate Animation -->
     </Window.Resources>
     <Border CornerRadius="30" MouseDown="DraggingPanel_MouseDown" MouseMove="DraggingPanel_MouseMove" MouseUp="DraggingPanel_MouseUp"  >
         <Border.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#D8485154" Offset="0.426"/>
-                <GradientStop Color="#D81177F5" Offset="1"/>
-                <GradientStop Color="#D8405568" Offset="0.643"/>
+                <GradientStop Color="#E5485154" Offset="0.376"/>
+                <GradientStop Color="#B21177F5" Offset="1"/>
+                <GradientStop Color="#CC405568" Offset="0.649"/>
                 <GradientStop Color="#D844525C" Offset="0.552"/>
+                <GradientStop Color="#FF485154" Offset="0.069"/>
+                <GradientStop Color="#F2485154" Offset="0.216"/>
+                <GradientStop Color="#BF2B63A5" Offset="0.803"/>
             </LinearGradientBrush>
         </Border.Background>
         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Center">
@@ -53,7 +84,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                    <Button Width="30" Click="OpenSettings_Click" BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
+                    <Button Width="30" Style="{StaticResource Rotate}" Click="OpenSettings_Click" BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
                         <Image Source="{StaticResource SettingsImage}" Stretch="Uniform" />
                     </Button>
                     <Popup x:Name="settingsPopup" PlacementTarget="{Binding ElementName=mainWindow}" Placement="Mouse" AllowsTransparency="True">
@@ -143,11 +174,11 @@
                 <!-- Humidity Info -->
 
                 <StackPanel Grid.Column="2" Margin="10 0 10 0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Image Width="32" Source="{StaticResource RainIcon}" Stretch="Uniform"/>
-                    <TextBlock Text="{Binding Weather.RainInfo.h3, StringFormat=' {0} mm'}" FontSize="12" Margin="0 0 0 3" TextAlignment="Center"></TextBlock>
-                    <TextBlock FontSize="10" FontWeight="Bold" Foreground="#7FFFFFFF" TextAlignment="Center" >Rain</TextBlock>
+                    <Image Width="32" Source="{StaticResource PressureIcon}" Stretch="Uniform"/>
+                    <TextBlock Text="{Binding Weather.Main.pressure, StringFormat=' {0} hPa'}" FontSize="12" Margin="0 0 0 3" TextAlignment="Center"></TextBlock>
+                    <TextBlock FontSize="10" FontWeight="Bold" Foreground="#7FFFFFFF" TextAlignment="Center">Pressure</TextBlock>
                 </StackPanel>
-                <!-- Chance Of Rain -->
+                <!-- Athmospheric Pressure -->
 
             </Grid>
             <!-- Footer -->

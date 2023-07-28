@@ -78,7 +78,6 @@
     <Compile Include="MVVM\Converters\DateTimeConverter.cs" />
     <Compile Include="MVVM\Converters\TempertatureConverter.cs" />
     <Compile Include="MVVM\Converters\WeatherIconConverter.cs" />
-    <Compile Include="MVVM\Models\ForecastModel.cs" />
     <Compile Include="MVVM\Models\WeatherModel.cs" />
     <Compile Include="MVVM\Services\WeatherService.cs" />
     <Compile Include="MVVM\ViewModels\NullToVisibilityConverter.cs" />
@@ -144,6 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="weather.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\pressure.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

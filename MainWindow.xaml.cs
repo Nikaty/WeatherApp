@@ -32,6 +32,7 @@ namespace WeatherApp
             InitializeComponent();
             viewModel = new WeatherViewModel();
             DataContext = viewModel;
+            this.Topmost = false;
         }
 
         private async Task LoadWeatherAsync()

@@ -17,6 +17,7 @@
                 <Setter Property="Foreground" Value="#fff" />
             </Style>
             <BitmapImage x:Key="HumidityIcon" UriSource="/Icons/humidity.png" />
+            <BitmapImage x:Key="PressureIcon" UriSource="/Icons/pressure.png" />
             <BitmapImage x:Key="WindIcon" UriSource="/Icons/wind.png" />
             <BitmapImage x:Key="RainIcon" UriSource="/Icons/rain.png" />
             <BitmapImage x:Key="FewCloudsImage" UriSource="/Images/weather-cloudy-19-128.png" />

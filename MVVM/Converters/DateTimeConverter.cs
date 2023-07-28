@@ -14,7 +14,7 @@ namespace WeatherApp.MVVM.Converters
         {
             if (value is long dateTime)
             {
-                DateTime date = DateTimeOffset.FromUnixTimeSeconds(dateTime).UtcDateTime.AddDays(1);
+                DateTime date = DateTimeOffset.FromUnixTimeSeconds(dateTime).UtcDateTime;
                 return date.ToString("MMMM, dd", culture);
             }
 
