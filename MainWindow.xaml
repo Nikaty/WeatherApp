@@ -52,6 +52,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!-- Save Button Style -->
 
     </Window.Resources>
     <Border CornerRadius="30" MouseDown="DraggingPanel_MouseDown" MouseMove="DraggingPanel_MouseMove" MouseUp="DraggingPanel_MouseUp"  >
