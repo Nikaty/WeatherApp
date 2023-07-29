@@ -11,7 +11,8 @@
         Background="Transparent"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        ShowInTaskbar="False" Topmost="False">
     <Window.DataContext>
         <viewModels:WeatherViewModel />
     </Window.DataContext>
@@ -89,7 +90,7 @@
                 </StackPanel>
                 <!-- Settings Button -->
 
-                <Popup x:Name="settingsPopup" PlacementTarget="{Binding ElementName=mainWindow}" Opacity="0.8" Placement="Mouse" AllowsTransparency="True">
+                <Popup x:Name="settingsPopup" Opacity=".2" PlacementTarget="{Binding ElementName=mainWindow}" Placement="Mouse" AllowsTransparency="True">
                     <Popup.Child>
                         <Border CornerRadius="10" BorderBrush="White" BorderThickness="1" >
                             <Border.Background>

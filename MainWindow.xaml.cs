@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using WeatherApp.MVVM.ViewModels;
 
@@ -20,7 +23,6 @@ namespace WeatherApp
             InitializeComponent();
             viewModel = new WeatherViewModel();
             DataContext = viewModel;
-            this.Topmost = false;
         }
 
         private async Task LoadWeatherAsync()
@@ -35,7 +37,7 @@ namespace WeatherApp
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-              await LoadWeatherAsync();
+            await LoadWeatherAsync();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
